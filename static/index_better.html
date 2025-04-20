@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>超级牛逼的聊天机器人</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ee 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .chat-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .chat-sidebar {
+            width: 25%;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-right: 20px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .chat-sidebar h2 {
+            font-size: 22px;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .chat-sidebar .message {
+            background-color: #f8fafc;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-sidebar .message p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .chat-main {
+            width: 70%;
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-main::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(66, 153, 225, 0.2) 0%, rgba(66, 153, 225, 0) 70%);
+            z-index: -1;
+        }
+
+        .chat-main::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(156, 125, 253, 0.2) 0%, rgba(156, 125, 253, 0) 70%);
+            z-index: -1;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #4a5568;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .header .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header .auth-buttons button {
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+            transition: all 0.3s;
+        }
+
+        .header .auth-buttons button:hover {
+            background-color: #9c7de9;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        label::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #4299e1, #9c7de9);
+            border-radius: 3px;
+            opacity: 0.7;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 18px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            background-color: #f8fafc;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2), inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: linear-gradient(90deg, #4299e1, #9c7de9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .result {
+            background-color: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.7;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4299e1, #9c7de9);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #4299e1;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 800px) {
+            .chat-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chat-sidebar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+                height: auto;
+            }
+
+            .chat-main {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- 左侧聊天记录栏 -->
+        <div class="chat-sidebar">
+            <h2>聊天记录</h2>
+            <div class="message">
+                <p>你好，有什么我可以帮你的吗？</p>
+            </div>
+            <div class="message">
+                <p>请告诉我你的问题，我会尽力帮助你。</p>
+            </div>
+        </div>
+
+        <!-- 主聊天界面 -->
+        <div class="chat-main">
+            <div class="header">
+                <h1>超级牛逼的聊天机器人</h1>
+                <div class="auth-buttons">
+                    <button>登录</button>
+                    <button>注册</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="inputText">输入你的文本：</label>
+                <textarea id="inputText" placeholder="在这里输入或粘贴你的文本..."></textarea>
+            </div>
+            <div class="btn-container">
+                <button id="submitButton">处理文本</button>
+            </div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>正在处理您的请求...</p>
+            </div>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const inputText = document.getElementById('inputText');
+        const submitButton = document.getElementById('submitButton');
+        const resultDiv = document.getElementById('result');
+        const loadingDiv = document.getElementById('loading');
+
+        // 文字渐显效果
+        function fadeInText(element, text) {
+            element.innerHTML = '';
+            let index = 0;
+
+            function appendNextChar() {
+                if (index < text.length) {
+                    const char = document.createElement('span');
+                    char.textContent = text.charAt(index);
+                    char.style.animation = 'textAppear 0.5s ease forwards';
+                    char.style.animationDelay = `${index * 0.05}s`;
+                    element.appendChild(char);
+                    index++;
+                    setTimeout(appendNextChar, 50);
+                }
+            }
+
+            appendNextChar();
+        }
+
+        submitButton.addEventListener('click', async () => {
+            const text = inputText.value.trim();
+
+            if (text) {
+                resultDiv.style.display = 'none';
+                loadingDiv.style.display = 'block';
+                submitButton.disabled = true;
+
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/process_text', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        resultDiv.style.display = 'block';
+                        fadeInText(resultDiv, `<p class="text-success">结果: ${data.result}</p>`);
+                    } else if (data.error) {
+                        resultDiv.style.display = 'block';
+                        fadeInText(resultDiv, `<p class="text-error">错误: ${data.error}</p>`);
+                    }
+                } catch (error) {
+                    resultDiv.style.display = 'block';
+                    fadeInText(resultDiv, `<p class="text-error">错误: ${error.message}</p>`);
+                } finally {
+                    loadingDiv.style.display = 'none';
+                    submitButton.disabled = false;
+                }
+            } else {
+                resultDiv.style.display = 'block';
+                fadeInText(resultDiv, '<p class="text-error">请输入一些文本。</p>');
+            }
+        });
+    </script>
+</body>
+</html>
