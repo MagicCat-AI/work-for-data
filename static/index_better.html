@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>超级牛逼的聊天机器人</title>
-    <link rel="stylesheet" href="styles.css"> <!-- 引入外部 CSS 文件 -->
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="chat-container">
@@ -21,9 +21,9 @@
         <div class="chat-main">
             <div class="header">
                 <h1>超级牛逼的聊天机器人</h1>
-                <div class="auth-buttons">
-                    <button>登录</button>
-                    <button>注册</button>
+                <div class="auth-buttons"  id="authButtons">
+                    <button id="showLogButton">登录</button>
+                    <button id="showResButton">注册</button>
                 </div>
             </div>
 
@@ -52,6 +52,39 @@
                 <p>正在处理您的请求...</p>
             </div>
             <div id="result" class="result"></div>
+            
+            <!-- 用户登录与注册 -->
+            <div id="auth1" style="display:none;">
+                <h3>注册</h3>
+                <form id="register-form">
+                    <label for="username">用户名: </label>
+                    <input type="text" id="username" required><br><br>
+                    <label for="password">密码: </label>
+                    <input type="password" id="password" required><br><br>
+                    <button type="submit">注册</button>
+                </form>
+            </div>
+            <div id="auth2" style="display:none;">
+                <h3>登录</h3>
+                <form id="login-form">
+                    <label for="login-username">用户名: </label>
+                    <input type="text" id="login-username" required><br><br>
+                    <label for="login-password">密码: </label>
+                    <input type="password" id="login-password" required><br><br>
+                    <button type="submit">登录</button>
+                </form>
+            </div>
+            <div id="chat" style="display:none;">
+                <div class="chat-container">
+                    <h3>聊天记录</h3>
+                    <div id="chat-history"></div>
+
+                    <div class="input-box">
+                        <input type="text" id="message" placeholder="请输入消息..." required>
+                        <button onclick="sendMessage()">发送</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -60,9 +93,27 @@
         const submitButton = document.getElementById('submitButton');
         const resultDiv = document.getElementById('result');
         const loadingDiv = document.getElementById('loading');
+        const showLogButton = document.getElementById('showLogButton');
+        const showResButton = document.getElementById('showResButton');
         const functionButtons = document.querySelectorAll('.function-btn');
         let selectedFunction = null;
-
+        const apiUrl = 'http://127.0.0.1:5000';  // 后端 Flask API 地址
+        let userId = null;
+        
+        showLogButton.addEventListener('click', function() {
+        if(!userId){
+            document.getElementById('auth2').style.display = 'block';}
+        });
+        
+        showResButton.addEventListener('click', function() {
+            const authDiv = document.getElementById('auth1');
+            if (authDiv.style.display === 'none') {
+                authDiv.style.display = 'block';
+            } else {
+                authDiv.style.display = 'none';
+            }
+        });
+        
         functionButtons.forEach(button => {
             button.addEventListener('click', function() {
                 functionButtons.forEach(btn => {
@@ -78,6 +129,28 @@
                 }
             });
         });
+        
+        // 加载聊天记录
+        function loadChatHistory() {
+            fetch(`${apiUrl}/chat_history`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('auth_token')  // 假设你使用 token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const chatHistory = data.chat_history;
+                const chatHistoryContainer = document.getElementById('chat-history');
+                chatHistoryContainer.innerHTML = '';  // 清空当前记录
+                chatHistory.forEach(item => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'chat-message';
+                    messageDiv.innerHTML = `<strong>${item.user_id}:</strong> ${item.message} <br><em>回复: ${item.response}</em>`;
+                    chatHistoryContainer.appendChild(messageDiv);
+                });
+            });
+        }
 
         submitButton.addEventListener('click', async () => {
             const text = inputText.value.trim();
@@ -108,6 +181,7 @@
                     const resultPrefix = selectedFunction ? `功能${selectedFunction}：` : '';
                     resultDiv.innerHTML = `<p class="text-success">${resultPrefix}${data.result}</p>`;
                     resultDiv.style.display = 'block';
+                    loadChatHistory();
                 } else if (data.error) {
                     resultDiv.innerHTML = `<p class="text-error">错误: ${data.error}</p>`;
                     resultDiv.style.display = 'block';
@@ -120,6 +194,83 @@
                 submitButton.disabled = false;
             }
         });
+        // 注册功能
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch(`${apiUrl}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                alert('注册失败: ' + error);
+            });
+        });
+
+        // 登录功能
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            fetch(`${apiUrl}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    userId = data.user_id;
+                    document.getElementById('chat').style.display = 'block';
+                    document.getElementById('auth2').style.display = 'none';
+                    document.getElementById('authButtons').style.display = 'none';
+                    loadChatHistory();
+                    alert(`${userId}:恭喜你，登陆成功`);
+                } else {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                alert('登录失败: ' + error);
+            });
+        });
+
+
+        // 发送消息
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            if (!message) {
+                return alert('请输入消息');
+            }
+
+            fetch(`${apiUrl}/chat`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('消息发送成功');
+                loadChatHistory();  // 刷新聊天记录
+            })
+            .catch(error => {
+                alert('发送消息失败: ' + error);
+            });
+        }
     </script>
 </body>
 </html>
