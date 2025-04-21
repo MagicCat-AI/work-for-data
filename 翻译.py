@@ -11,7 +11,7 @@ SPARKAI_API_KEY = 'a2ad84a59f978fa350aa4835a42f18e1'
 SPARKAI_DOMAIN = 'lite'
 
 
-def chatapi(text):
+def 中译英翻译api(text):
     spark = ChatSparkLLM(
         spark_api_url=SPARKAI_URL,
         spark_app_id=SPARKAI_APP_ID,
@@ -22,40 +22,16 @@ def chatapi(text):
     )
     messages = [ChatMessage(
         role="user",
-        content=text
-    )]
-    handler = ChunkPrintHandler()
-    a = spark.generate([messages], callbacks=[handler])
-    print(a.generations[0][0].text)
-    return a.generations[0][0].text
-
-
-
-
-def 代码编写api(text):
-    spark = ChatSparkLLM(
-        spark_api_url=SPARKAI_URL,
-        spark_app_id=SPARKAI_APP_ID,
-        spark_api_key=SPARKAI_API_KEY,
-        spark_api_secret=SPARKAI_API_SECRET,
-        spark_llm_domain=SPARKAI_DOMAIN,
-        streaming=False,
-    )
-    messages = [ChatMessage(
-        role="user",
-        content=f"""任务需求：编写能完成需求的代码
+        content=f"""任务需求：将文本翻译成英文
         文本：{text}"""
     )]
     handler = ChunkPrintHandler()
     a = spark.generate([messages], callbacks=[handler])
-    print(a.generations[0][0].text)
     return a.generations[0][0].text
 
 
 
-
-
-def 写故事api(text):
+def 英译中翻译api(text):
     spark = ChatSparkLLM(
         spark_api_url=SPARKAI_URL,
         spark_app_id=SPARKAI_APP_ID,
@@ -66,10 +42,9 @@ def 写故事api(text):
     )
     messages = [ChatMessage(
         role="user",
-        content=f"""任务需求：扩写文本
+        content=f"""任务需求：将文本翻译成中文
         文本：{text}"""
     )]
     handler = ChunkPrintHandler()
     a = spark.generate([messages], callbacks=[handler])
-    print(a.generations[0][0].text)
     return a.generations[0][0].text
