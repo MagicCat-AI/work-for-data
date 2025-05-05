@@ -31,15 +31,7 @@ def process_text():
         print(data)
         # 调用 chatapi 处理文本
         if input_function == None:
-            output_text = chatapi(input_text)
-            
-            # 保存聊天记录到数据库
-            conn = get_db_connection()
-            cursor = conn.cursor()
-            cursor.execute('INSERT INTO chat_history (user_id, message, response) VALUES (?, ?, ?)',
-                            (session['user_id'], input_text, output_text))
-            conn.commit()
-            conn.close()
+            output_text = chatapi(input_text)       
 
         # if input_function == 1:
         #     output_text = PPTapi(input_text)
@@ -60,13 +52,19 @@ def process_text():
         output_text = str(output_text)
         print(output_text)
         
-        # 存储聊天记录
-        # if user_id:
-        #     conn = sqlite3.connect('chat_app.db')
-        #     cursor = conn.cursor()
-        #     cursor.execute('INSERT INTO chat_history (user_id, content) VALUES (?, ?)', (user_id, output_text))
-        #     conn.commit()
-        #     conn.close()
+        # 保存聊天记录到数据库
+		try:
+			conn = get_db_connection()
+			cursor = conn.cursor()
+			cursor.execute(
+				'INSERT INTO chat_history (user_id, message, response) VALUES (?, ?, ?)',
+				(session['user_id'], input_text, output_text)
+			)
+			conn.commit()
+		except Exception as e:
+			print(f'保存聊天记录失败: {e}')
+		finally:
+			conn.close()
 
         
         return jsonify({"result": output_text})
