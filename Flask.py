@@ -16,6 +16,11 @@ CORS(app, supportscredentials=True)
 # 设置静态文件夹
 app.static_folder = 'static'
 app.secret_key = 'hard_to_guess_secret_key'
+app.config.update(
+    SESSION_COOKIE_SECURE=True,      # 仅 HTTPS 下发送 Cookie
+    SESSION_COOKIE_HTTPONLY=True,    # 禁止 JavaScript 访问 Cookie
+    SESSION_COOKIE_SAMESITE='Lax',   # 或 'Strict'
+)
 
 @app.route('/process_text', methods=['POST'])
 def process_text():
@@ -53,18 +58,19 @@ def process_text():
         print(output_text)
         
         # 保存聊天记录到数据库
-		try:
-			conn = get_db_connection()
-			cursor = conn.cursor()
-			cursor.execute(
-				'INSERT INTO chat_history (user_id, message, response) VALUES (?, ?, ?)',
-				(session['user_id'], input_text, output_text)
-			)
-			conn.commit()
-		except Exception as e:
-			print(f'保存聊天记录失败: {e}')
-		finally:
-			conn.close()
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                'INSERT INTO chat_history (user_id, message, response) VALUES (?, ?, ?)',
+                (session['user_id'], input_text, output_text)
+            )
+            conn.commit()
+        except Exception as e:
+            print(f'保存聊天记录失败: {e}')
+        finally:
+            conn.close()
+
 
         
         return jsonify({"result": output_text})
