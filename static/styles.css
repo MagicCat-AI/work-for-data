@@ -164,8 +164,11 @@ textarea {
 
 textarea:focus {
     outline: none;
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2), inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-color: transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(90deg, #4299e1, #9c7de9) border-box;
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px rgba(66, 153, 225, 0.2);
 }
 
 .btn-container {
