@@ -189,8 +189,8 @@ button {
 }
 
 button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(66, 153, 225, 0.5);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
 }
 
 .result {
