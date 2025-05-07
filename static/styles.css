@@ -286,3 +286,23 @@ button:hover {
 .function-btn:hover {
     transform: scale(1.05);
 }
+
+.chat-message {
+    position: relative;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 12px;
+    background: #f8fafc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.chat-message::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -8px;
+    top: 12px;
+    border: 8px solid transparent;
+    border-right-color: #f8fafc;
+}
