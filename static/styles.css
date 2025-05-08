@@ -260,19 +260,32 @@ button:hover {
 
 @media (max-width: 800px) {
     .chat-container {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column-reverse; /* 聊天记录在下 */
+        padding: 10px;
     }
-
     .chat-sidebar {
         width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
-        height: auto;
+        max-height: 30vh; /* 限制高度 */
+        margin: 20px 0 0 0;
+        order: 2; /* 强制放在底部 */
     }
-
     .chat-main {
         width: 100%;
+        padding: 20px;
+    }
+    .function-buttons {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .function-btn {
+        flex: 1 0 40%; /* 每行2个按钮 */
+        min-width: 120px;
+        margin: 0;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    .header h1 {
+        font-size: 22px;
     }
 }
 
