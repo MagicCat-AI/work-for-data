@@ -226,13 +226,31 @@ button:hover {
 }
 
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(66, 153, 225, 0.2);
     border-radius: 50%;
-    border-top: 4px solid #4299e1;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
+    border-top-color: #4299e1;
+    animation: spin 1s ease-in-out infinite;
+    position: relative;
+    margin: 0 auto 15px;
+}
+
+.spinner::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 3px solid rgba(156, 125, 253, 0.2);
+    border-radius: 50%;
+    border-top-color: #9c7de9;
+    animation: spin 1.5s ease-in-out infinite reverse;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 @keyframes spin {
