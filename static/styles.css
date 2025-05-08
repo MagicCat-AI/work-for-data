@@ -165,7 +165,7 @@ textarea {
 textarea:focus {
     outline: none;
     border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2), inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3), inset 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .btn-container {
