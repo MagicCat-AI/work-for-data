@@ -274,10 +274,9 @@ button:hover {
 }
 
 .function-btn.active {
-    border-color: #4299e1;
-    background: linear-gradient(90deg, #4299e1, #9c7de9);
-    color: white;
-    box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+    border-color: transparent;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
 }
 
 .function-btn:hover {
