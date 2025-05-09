@@ -9,7 +9,6 @@ from urllib.parse import urlencode
 import json
 import requests
 
-
 class AssembleHeaderException(Exception):
     def __init__(self, msg):
         self.message = msg
@@ -38,7 +37,6 @@ class WebsocketDemo:
         digest = base64.b64encode(sha256.digest()).decode(encoding='utf-8')
         return digest
 
-
     def parse_url(self,requset_url):
         stidx = requset_url.index("://")
         host = requset_url[stidx + 3:]
@@ -50,7 +48,6 @@ class WebsocketDemo:
         host = host[:edidx]
         u = Url(host, path, schema)
         return u
-
 
     # build websocket auth request url
     def assemble_ws_auth_url(self,requset_url, method="POST", api_key="", api_secret=""):
@@ -132,5 +129,3 @@ def 文本纠错api(text):
     result = demo.get_result()
     #print(result)
     return result
-
-

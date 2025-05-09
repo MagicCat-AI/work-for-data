@@ -8,7 +8,6 @@ import time
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-
 class AIPPT():
 
     def __init__(self, APPId, APISecret, Text, templateId):
@@ -222,9 +221,3 @@ def PPTapi(Text):
     taskid = demo.create_task()
     result = demo.get_result(taskid)
     return result
-
-
-
-
-
-
