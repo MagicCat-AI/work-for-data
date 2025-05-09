@@ -13,6 +13,8 @@ body {
     min-height: 100vh;
     padding: 20px;
     overflow-x: hidden;
+    scrollbar-width: thin;          /* 新增行 */
+    scrollbar-color: #9c7de9 #f8fafc; /* 新增行 */
 }
 
 .chat-container {
