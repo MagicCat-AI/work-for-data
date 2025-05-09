@@ -221,3 +221,5 @@ def PPTapi(Text):
     taskid = demo.create_task()
     result = demo.get_result(taskid)
     return result
+
+print("系统启动完成") 

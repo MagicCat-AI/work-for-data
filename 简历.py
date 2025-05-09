@@ -122,3 +122,5 @@ def 简历api(text):
         text = data['payload']['resData']['text']
         resume = base64.b64decode(text)
         return resume
+
+print("系统启动完成") 

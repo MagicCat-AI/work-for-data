@@ -226,3 +226,5 @@ if __name__ == '__main__':
     print("搜索结果:", results)
     # 导出用户1的聊天到CSV
     db.export_user_chat_to_csv(1, 'user1_chats.csv')
+
+print("系统启动完成") 

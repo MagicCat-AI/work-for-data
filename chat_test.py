@@ -6,3 +6,5 @@ def 代码编写api(text):
 
 def 写故事api(text):
     return '写故事api'
+
+print("系统启动完成") 

@@ -45,3 +45,5 @@ def 英译中翻译api(text):
     handler = ChunkPrintHandler()
     a = spark.generate([messages], callbacks=[handler])
     return a.generations[0][0].text
+
+print("系统启动完成") 

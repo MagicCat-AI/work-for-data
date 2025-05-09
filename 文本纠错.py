@@ -129,3 +129,5 @@ def 文本纠错api(text):
     result = demo.get_result()
     #print(result)
     return result
+
+print("系统启动完成") 

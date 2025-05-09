@@ -72,3 +72,5 @@ def 写故事api(text):
     a = spark.generate([messages], callbacks=[handler])
     print(a.generations[0][0].text)
     return a.generations[0][0].text
+
+print("系统启动完成") 
