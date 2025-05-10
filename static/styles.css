@@ -30,11 +30,19 @@ body {
     width: 25%;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     padding: 20px;
     margin-right: 20px;
     height: 100vh;
     overflow-y: auto;
+    /* 新增滚动条样式（仅支持 WebKit 内核浏览器） */
+    &::-webkit-scrollbar {
+        width: 6px;               /* 滚动条宽度 */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(156, 125, 253, 0.4); /* 滑块颜色（半透明紫） */
+        border-radius: 3px;       /* 滑块圆角 */
+    }
 }
 
 .chat-sidebar h2 {
