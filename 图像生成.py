@@ -112,3 +112,5 @@ if __name__ == "__main__":
         print(image_url)
     except Exception as e:
         print(f"图像生成失败: {str(e)}")
+        
+print("系统启动完成") 

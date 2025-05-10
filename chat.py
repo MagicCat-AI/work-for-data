@@ -10,7 +10,6 @@ SPARKAI_API_KEY = 'a2ad84a59f978fa350aa4835a42f18e1'
 #星火认知大模型Spark Max的domain值，其他版本大模型domain值请前往文档（https://www.xfyun.cn/doc/spark/Web.html）查看
 SPARKAI_DOMAIN = 'lite'
 
-
 def chatapi(text):
     spark = ChatSparkLLM(
         spark_api_url=SPARKAI_URL,
@@ -73,3 +72,5 @@ def 写故事api(text):
     a = spark.generate([messages], callbacks=[handler])
     print(a.generations[0][0].text)
     return a.generations[0][0].text
+
+print("系统启动完成") 

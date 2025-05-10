@@ -8,7 +8,6 @@ import time
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-
 class AIPPT():
 
     def __init__(self, APPId, APISecret, Text, templateId):
@@ -223,8 +222,4 @@ def PPTapi(Text):
     result = demo.get_result(taskid)
     return result
 
-
-
-
-
-
+print("系统启动完成") 

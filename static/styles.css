@@ -164,8 +164,11 @@ textarea {
 
 textarea:focus {
     outline: none;
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2), inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-color: transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(90deg, #4299e1, #9c7de9) border-box;
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px rgba(66, 153, 225, 0.2);
 }
 
 .btn-container {
@@ -189,8 +192,8 @@ button {
 }
 
 button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(66, 153, 225, 0.5);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
 }
 
 .result {
@@ -223,33 +226,51 @@ button:hover {
 }
 
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(66, 153, 225, 0.2);
     border-radius: 50%;
-    border-top: 4px solid #4299e1;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
+    border-top-color: #4299e1;
+    animation: spin 1s ease-in-out infinite;
+    position: relative;
+    margin: 0 auto 15px;
 }
+
+.spinner::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 3px solid rgba(156, 125, 253, 0.2);
+    border-radius: 50%;
+    border-top-color: #9c7de9;
+    animation: spin 1.5s ease-in-out infinite reverse;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
+
 @media (max-width: 800px) {
     .chat-container {
         flex-direction: column;
         align-items: center;
     }
-
     .chat-sidebar {
         width: 100%;
         margin-right: 0;
         margin-bottom: 20px;
         height: auto;
     }
-
     .chat-main {
         width: 100%;
     }
@@ -282,4 +303,24 @@ button:hover {
 
 .function-btn:hover {
     transform: scale(1.05);
+}
+
+.chat-message {
+    position: relative;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 12px;
+    background: #f8fafc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.chat-message::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -8px;
+    top: 12px;
+    border: 8px solid transparent;
+    border-right-color: #f8fafc;
 }

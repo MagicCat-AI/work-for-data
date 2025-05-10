@@ -194,3 +194,5 @@ def get_chat_history():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+print("系统启动完成") 

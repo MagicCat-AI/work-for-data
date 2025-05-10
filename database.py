@@ -36,3 +36,5 @@ def get_db_connection():
 
 # 在应用启动时初始化数据库
 init_db()
+
+print("系统启动完成") 

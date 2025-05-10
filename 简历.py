@@ -17,7 +17,6 @@ class AssembleHeaderException(Exception):
     def __init__(self, msg):
         self.message = msg
 
-
 class Url:
     def __init__(this, host, path, schema):
         this.host = host
@@ -25,14 +24,12 @@ class Url:
         this.schema = schema
         pass
 
-
 # calculate sha256 and encode to base64
 def sha256base64(data):
     sha256 = hashlib.sha256()
     sha256.update(data)
     digest = base64.b64encode(sha256.digest()).decode(encoding='utf-8')
     return digest
-
 
 def parse_url(requset_url):
     stidx = requset_url.index("://")
@@ -45,7 +42,6 @@ def parse_url(requset_url):
     host = host[:edidx]
     u = Url(host, path, schema)
     return u
-
 
 # 生成鉴权url
 def assemble_ws_auth_url(requset_url, method="GET", api_key="", api_secret=""):
@@ -112,9 +108,6 @@ def main(text,appid,apikey,apisecret):
     # print(time.time())
     return response
 
-
-
-
 def 简历api(text):
     APPID = 'b6aa1eb8'
     APISecret = 'NjcyN2JiYmNjYTM3MWRlN2RlNTNkNmNh'
@@ -130,6 +123,4 @@ def 简历api(text):
         resume = base64.b64decode(text)
         return resume
 
-
-
-
+print("系统启动完成") 
