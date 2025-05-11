@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify, send_from_directory,session
 from flask_cors import CORS
-# from chat import chatapi, 代码编写api, 写故事api
-from chat_test import chatapi, 代码编写api, 写故事api
-# from PPT import PPTapi
-# from 文本纠错 import 文本纠错api
-# from 简历 import 简历api
-# from 翻译 import 中译英翻译api,英译中翻译api
+from chat import chatapi, 代码编写api, 写故事api
+# from chat_test import chatapi, 代码编写api, 写故事api
+from PPT import PPTapi
+from 文本纠错 import 文本纠错api
+from 简历 import 简历api
+from 翻译 import 中译英翻译api,英译中翻译api
 import sqlite3
 from database import get_db_connection
 app = Flask(__name__)
@@ -38,18 +38,18 @@ def process_text():
         if input_function == None:
             output_text = chatapi(input_text)       
 
-        # if input_function == 1:
-        #     output_text = PPTapi(input_text)
-        # if input_function == 2:
-        #     output_text = PPTapi(input_text)
-        # if input_function == 3:
-        #     output_text = 简历api(input_text)
-        # if input_function == 4:
-        #     output_text = 文本纠错api(input_text)
-        # if input_function == 5:
-        #     output_text = 中译英翻译api(input_text)
-        # if input_function == 6:
-        #     output_text = 英译中翻译api(input_text)
+        if input_function == 1:
+            output_text = PPTapi(input_text)
+        if input_function == 2:
+            output_text = PPTapi(input_text)
+        if input_function == 3:
+            output_text = 简历api(input_text)
+        if input_function == 4:
+            output_text = 文本纠错api(input_text)
+        if input_function == 5:
+            output_text = 中译英翻译api(input_text)
+        if input_function == 6:
+            output_text = 英译中翻译api(input_text)
         if input_function == 7:
             output_text = 代码编写api(input_text)
         if input_function == 8:
@@ -191,6 +191,5 @@ def get_chat_history():
     return jsonify({"chat_history": result})
 
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
