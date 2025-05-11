@@ -110,6 +110,7 @@ def main(text,appid,apikey,apisecret):
     # print(time.time())
     response = requests.post(url,json=content,headers={'content-type': "application/json"}).text
     # print(time.time())
+    response = json.loads(response)
     return response
 
 
