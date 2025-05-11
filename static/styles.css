@@ -10,8 +10,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200vh;
-    padding: 10px;
+    min-height: 100vh;
+    padding: 50px;
     overflow-x: hidden;
 }
 
