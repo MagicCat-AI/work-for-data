@@ -29,7 +29,7 @@ def process_text():
         data = request.get_json()
         if not data or 'text' not in data:
             return jsonify({"error": "No text provided"}), 400
-
+        print("1")
         input_text = data['text']
         input_function = data['function']
         #user_id = data['user_id']  # 从前端获取用户 ID
@@ -56,7 +56,7 @@ def process_text():
             output_text = 写故事api(input_text)
         output_text = str(output_text)
         print(output_text)
-        
+        print("1")
         # 保存聊天记录到数据库
         try:
             conn = get_db_connection()
@@ -71,7 +71,7 @@ def process_text():
         finally:
             conn.close()
 
-
+        print("1")
         
         return jsonify({"result": output_text})
 
