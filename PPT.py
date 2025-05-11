@@ -91,7 +91,8 @@ class AIPPT():
         # print("sid:" + sid)
         if (None != sid):
             response = requests.request("GET", url=f"https://zwapi.xfyun.cn/api/ppt/v2/progress?sid={sid}",
-                                        headers=self.header).text
+                                      headers=self.header).text
+            response = json.loads(response)
             print(response)
             return response
         else:
