@@ -5,8 +5,8 @@ from sparkai.core.messages import ChatMessage
 SPARKAI_URL = 'wss://spark-api.xf-yun.com/v1.1/chat'
 #星火认知大模型调用秘钥信息，请前往讯飞开放平台控制台（https://console.xfyun.cn/services/bm35）查看
 SPARKAI_APP_ID = 'b6aa1eb8'
-SPARKAI_API_SECRET = 'NjcyN2JiYmNjYTM3MWRlN2RlNTNkNmNh'
-SPARKAI_API_KEY = 'a2ad84a59f978fa350aa4835a42f18e1'
+SPARKAI_API_SECRET = 'asdadqweniqeiqininkandsamdslw213'
+SPARKAI_API_KEY = '132123aidniadsnqkwekmdalsqweeq wqe'
 #星火认知大模型Spark Max的domain值，其他版本大模型domain值请前往文档（https://www.xfyun.cn/doc/spark/Web.html）查看
 SPARKAI_DOMAIN = 'lite'
 
