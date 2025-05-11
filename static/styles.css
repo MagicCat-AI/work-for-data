@@ -219,6 +219,13 @@ button:hover {
     display: none;
     position: relative;
     overflow: hidden;
+    /* 新增代码块样式（预防性优化） */
+    pre {
+        background: #edf2f7;      /* 浅灰色背景 */
+        padding: 12px;           /* 内边距 */
+        border-radius: 6px;      /* 圆角 */
+        overflow-x: auto;        /* 横向滚动（防止代码溢出） */
+    }
 }
 
 .result::before {
