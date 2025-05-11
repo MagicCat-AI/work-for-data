@@ -36,6 +36,7 @@ class WebsocketDemo:
         sha256 = hashlib.sha256()
         sha256.update(data)
         digest = base64.b64encode(sha256.digest()).decode(encoding='utf-8')
+        digest = digest.encode('utf-8')
         return digest
 
 
