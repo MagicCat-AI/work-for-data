@@ -26,6 +26,7 @@ class Url:
 def sha256base64(data):
     sha256 = hashlib.sha256()
     sha256.update(data)
+    sha256 = sha256.hexdigest()
     return base64.b64encode(sha256.digest()).decode('utf-8')
 
 
