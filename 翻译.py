@@ -26,6 +26,7 @@ def 中译英翻译api(text):
         文本：{text}"""
     )]
     handler = ChunkPrintHandler()
+    handler = handler.handle(messages)
     a = spark.generate([messages], callbacks=[handler])
     return a.generations[0][0].text
 
