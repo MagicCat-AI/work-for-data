@@ -127,6 +127,12 @@ body {
     border-radius: 5px;
     box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
     transition: all 0.3s;
+    /* 新增禁用状态样式 */
+    &:disabled {
+        background: #cbd5e0;     /* 禁用时背景变灰色 */
+        transform: none !important; /* 强制取消悬停动画 */
+        box-shadow: none;       /* 移除阴影 */
+    }
 }
 
 .header .auth-buttons button:hover {
