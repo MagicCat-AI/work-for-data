@@ -6,33 +6,47 @@
 }
 
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ee 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e6ee 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
     overflow-x: hidden;
+    scrollbar-width: thin;          /* 新增行 */
+    scrollbar-color: #9c7de9 #f8fafc; /* 新增行 */
 }
 
 .chat-container {
     display: flex;
     justify-content: space-between;
-    width: 100vw; 
+    width: 100vw;
     height: 100vh;
-    margin: 0;   
-    padding: 0;   
+    margin: 0;
+    padding: 0;
+    ::selection {
+        background: rgba(156, 125, 253, 0.3);
+        color: inherit;
+    }
 }
 
 .chat-sidebar {
     width: 25%;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     padding: 20px;
     margin-right: 20px;
     height: 100vh;
     overflow-y: auto;
+    /* 新增滚动条样式（仅支持 WebKit 内核浏览器） */
+    &::-webkit-scrollbar {
+        width: 6px;               /* 滚动条宽度 */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(156, 125, 253, 0.4); /* 滑块颜色（半透明紫） */
+        border-radius: 3px;       /* 滑块圆角 */
+    }
 }
 
 .chat-sidebar h2 {
@@ -117,6 +131,12 @@ body {
     border-radius: 5px;
     box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
     transition: all 0.3s;
+    /* 新增禁用状态样式 */
+    &:disabled {
+        background: #cbd5e0;     /* 禁用时背景变灰色 */
+        transform: none !important; /* 强制取消悬停动画 */
+        box-shadow: none;       /* 移除阴影 */
+    }
 }
 
 .header .auth-buttons button:hover {
@@ -165,7 +185,7 @@ textarea {
 textarea:focus {
     outline: none;
     border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2), inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3), inset 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .btn-container {
@@ -203,6 +223,13 @@ button:hover {
     display: none;
     position: relative;
     overflow: hidden;
+    /* 新增代码块样式（预防性优化） */
+    pre {
+        background: #edf2f7;      /* 浅灰色背景 */
+        padding: 12px;           /* 内边距 */
+        border-radius: 6px;      /* 圆角 */
+        overflow-x: auto;        /* 横向滚动（防止代码溢出） */
+    }
 }
 
 .result::before {
@@ -225,11 +252,16 @@ button:hover {
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
-    border-top: 4px solid #4299e1;
+    border-top: 4px solid #9c7de9;
     width: 30px;
     height: 30px;
     animation: spin 1s linear infinite;
     margin: 0 auto 10px;
+    /* 新增暂停状态样式 */
+    &.paused {
+        animation-play-state: paused; /* 动画暂停 */
+        opacity: 0.5;                /* 半透明效果 */
+    }
 }
 
 @keyframes spin {
@@ -241,6 +273,9 @@ button:hover {
     .chat-container {
         flex-direction: column;
         align-items: center;
+    }
+    button, .function-btn {
+        -webkit-tap-highlight-color: rgba(156, 125, 253, 0.3);
     }
 
     .chat-sidebar {
@@ -274,10 +309,9 @@ button:hover {
 }
 
 .function-btn.active {
-    border-color: #4299e1;
-    background: linear-gradient(90deg, #4299e1, #9c7de9);
-    color: white;
-    box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+    border-color: transparent;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
 }
 
 .function-btn:hover {
